@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô phỏng phát hiện bế tắc - Nhóm 18</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="header-inner">
+        <div class="header-icon">&#128274;</div>
+        <div>
+            <h1>Mô phỏng các phương pháp kiểm tra xác định bế tắc</h1>
+            <p>An toàn &nbsp;·&nbsp; Banker &nbsp;·&nbsp; Phát hiện bế tắc &nbsp;·&nbsp; Đồ thị RAG &nbsp;·&nbsp; Nhóm 18</p>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- ===== THANH CÔNG CỤ ===== -->
+    <div class="toolbar">
+        <label for="sample">Dữ liệu mẫu:</label>
+        <select id="sample">
+            {% for name in samples %}
+            <option value="{{ loop.index0 }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <button id="btn-load-sample" class="btn primary">Tải dữ liệu mẫu</button>
+        <span class="toolbar-space"></span>
+        <button id="btn-open" class="btn">&#128194; Mở file</button>
+        <input type="file" id="file-input" accept=".txt" hidden>
+        <button id="btn-save" class="btn">&#128190; Lưu file</button>
+        <button id="btn-export" class="btn">&#128196; Xuất báo cáo</button>
+        <button id="btn-reset" class="btn">&#8635; Reset</button>
+    </div>
+
+    <div id="banner" class="banner kind-0"></div>
+    <div id="status"></div>
+
+    <!-- Tab navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active">&#128202; Dữ liệu</button>
+        <button class="tab-btn">&#127974; Banker</button>
+        <button class="tab-btn">&#128737; Kiểm tra an toàn</button>
+        <button class="tab-btn">&#128269; Phát hiện bế tắc</button>
+        <button class="tab-btn">&#128279; Đồ thị RAG</button>
+    </div>
+
+    <!-- ===== TAB 1: DỮ LIỆU ===== -->
+    <div class="tab-content">
+        <section class="card fade-in">
+            <div class="card-header">
+                <span class="card-icon">&#128202;</span>
+                <h2>Dữ liệu hệ thống</h2>
+            </div>
+
+            <div class="field-row">
+                <label>Số tiến trình n <input type="number" id="size-n" min="1" max="20"></label>
+                <label>Số kiểu tài nguyên m <input type="number" id="size-m" min="1" max="10"></label>
+                <button id="btn-new-table" class="btn">Tạo bảng</button>
+            </div>
+
+            <h3 class="sub-title">Available - tài nguyên khả dụng (1 x m)</h3>
+            <div id="t-available" class="table-wrapper"></div>
+
+            <div class="matrix-grid">
+                <div>
+                    <h3 class="sub-title">Allocation - tài nguyên đã phân bổ (n x m)</h3>
+                    <div id="t-allocation" class="table-wrapper"></div>
+                </div>
+                <div>
+                    <h3 class="sub-title">Max - nhu cầu tối đa (n x m)</h3>
+                    <div id="t-max" class="table-wrapper"></div>
+                </div>
+            </div>
+
+            <h3 class="sub-title">Request - yêu cầu hiện tại (n x m)</h3>
+            <p class="note">Dùng cho thuật toán phát hiện bế tắc và đồ thị RAG; để 0 nếu chỉ chạy Banker.</p>
+            <div id="t-request" class="table-wrapper"></div>
+        </section>
+    </div>
+
+    <!-- ===== TAB 2: BANKER ===== -->
+    <div class="tab-content hidden">
+        <section class="card fade-in">
+            <div class="card-header">
+                <span class="card-icon">&#129518;</span>
+                <h2>Ma trận Need = Max - Allocation (tự động tính)</h2>
+            </div>
+            <div id="t-need" class="table-wrapper"></div>
+        </section>
+
+        <section class="card fade-in" style="animation-delay:.1s">
+            <div class="card-header">
+                <span class="card-icon">&#127974;</span>
+                <h2>Tiến trình phát yêu cầu tài nguyên Request(i)</h2>
+            </div>
+            <div class="field-row">
+                <label>Tiến trình <select id="process"></select></label>
+            </div>
+            <div id="t-reqinput" class="table-wrapper"></div>
+            <button id="btn-request" class="btn primary large">Gửi yêu cầu (thuật toán Banker)</button>
+            <div id="request-status" class="result" hidden></div>
+            <div id="request-detail" class="box"></div>
+        </section>
+    </div>
+
+    <!-- ===== TAB 3: KIỂM TRA AN TOÀN ===== -->
+    <div class="tab-content hidden">
+        <section class="card fade-in">
+            <div class="card-header">
+                <span class="card-icon">&#128737;</span>
+                <h2>Thuật toán kiểm tra tính an toàn của hệ (mục 4.2.2c)</h2>
+            </div>
+            <div class="step-panel" data-panel="safety" data-run="/run_safety" data-name="Need"></div>
+        </section>
+    </div>
+
+    <!-- ===== TAB 4: PHÁT HIỆN BẾ TẮC ===== -->
+    <div class="tab-content hidden">
+        <section class="card fade-in">
+            <div class="card-header">
+                <span class="card-icon">&#128269;</span>
+                <h2>Thuật toán phát hiện bế tắc (mục 4.2.3)</h2>
+            </div>
+            <div class="step-panel" data-panel="detection" data-run="/run_detection" data-name="Request"></div>
+        </section>
+
+        <section class="card fade-in" style="animation-delay:.1s">
+            <div class="card-header">
+                <span class="card-icon">&#128736;</span>
+                <h2>Xử lý bế tắc (mục 4.2.4)</h2>
+            </div>
+            <div id="deadlock"></div>
+        </section>
+    </div>
+
+    <!-- ===== TAB 5: ĐỒ THỊ RAG ===== -->
+    <div class="tab-content hidden">
+        <section class="card fade-in">
+            <div class="card-header">
+                <span class="card-icon">&#128279;</span>
+                <h2>Đồ thị cấp phát tài nguyên (RAG) - tài nguyên đơn thể</h2>
+            </div>
+            <p class="note">Áp dụng khi mọi kiểu tài nguyên có đúng 1 thể hiện. Dữ liệu lấy từ Allocation và
+                Request (giá trị 0/1). Cạnh Pi -&gt; Pk nghĩa là Pi đang chờ tài nguyên do Pk giữ.</p>
+            <button id="btn-rag" class="btn primary large">Vẽ đồ thị và kiểm tra</button>
+            <div id="rag-summary"></div>
+            <svg id="rag-view" viewBox="0 0 600 420"></svg>
+            <pre id="rag-log" class="box"></pre>
+        </section>
+    </div>
+
+    <!-- ===== NHẬT KÝ ===== -->
+    <section class="card">
+        <div class="card-header">
+            <span class="card-icon">&#128221;</span>
+            <h2>Nhật ký thực thi (Log)</h2>
+        </div>
+        <pre id="log"></pre>
+    </section>
+</main>
+
+<template id="step-template">
+    <div class="buttons">
+        <button class="btn primary" data-action="run">Chạy thuật toán</button>
+        <button class="btn" data-action="back">&lt;  Back</button>
+        <button class="btn" data-action="next">Next  &gt;</button>
+        <button class="btn" data-action="all">Chạy hết  &gt;&gt;</button>
+        <button class="btn" data-action="reset">Reset</button>
+    </div>
+    <div class="work"></div>
+    <div class="finish"></div>
+    <div class="table-wrapper table-wrap">
+        <table class="grid">
+            <thead><tr></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="result conclusion" hidden></div>
+</template>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

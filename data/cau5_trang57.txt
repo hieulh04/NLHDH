@@ -1,0 +1,24 @@
+# Câu 5 trang 57 (5 tiến trình, 4 tài nguyên)
+# Tính Need, kiểm tra an toàn, P1 yêu cầu (0, 4, 2, 0).
+# n m
+5 4
+# Available
+1 5 2 0
+# Allocation
+0 0 1 2
+1 0 0 0
+1 3 5 4
+0 6 3 2
+0 0 1 4
+# Max
+0 0 1 2
+1 7 5 0
+2 3 5 6
+0 6 5 2
+0 6 5 6
+# Request
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0

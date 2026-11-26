@@ -1,0 +1,24 @@
+# Tài nguyên đơn thể - đồ thị RAG (mục 1.3.1)
+# P1 -> P2 -> P3 -> P1 tạo chu trình; P4 bị kéo theo; P5 bình thường (đánh số từ P0).
+# n m
+5 5
+# Available
+0 0 0 0 0
+# Allocation
+1 0 0 0 0
+0 1 0 0 0
+0 0 1 0 0
+0 0 0 1 0
+0 0 0 0 1
+# Max
+1 1 0 0 0
+0 1 1 0 0
+1 0 1 0 0
+1 0 0 1 0
+0 0 0 0 1
+# Request
+0 1 0 0 0
+0 0 1 0 0
+1 0 0 0 0
+1 0 0 0 0
+0 0 0 0 0

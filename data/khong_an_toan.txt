@@ -1,0 +1,18 @@
+# Trạng thái không an toàn
+# Không sắp xếp được dãy an toàn: hệ có nguy cơ bế tắc.
+# n m
+3 2
+# Available
+1 0
+# Allocation
+1 1
+1 1
+1 1
+# Max
+3 2
+2 3
+3 3
+# Request
+0 0
+0 0
+0 0

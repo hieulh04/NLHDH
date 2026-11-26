@@ -1,0 +1,480 @@
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --green-50:  #f0fdf4;
+    --green-100: #dcfce7;
+    --green-200: #bbf7d0;
+    --green-400: #4ade80;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --green-700: #15803d;
+    --green-800: #166534;
+    --gray-50:   #f9fafb;
+    --gray-100:  #f3f4f6;
+    --gray-200:  #e5e7eb;
+    --gray-400:  #9ca3af;
+    --gray-600:  #4b5563;
+    --gray-700:  #374151;
+    --gray-800:  #1f2937;
+    --red-100:   #fee2e2;
+    --red-400:   #f87171;
+    --red-600:   #dc2626;
+    --orange-100:#ffedd5;
+    --orange-500:#f97316;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+    --radius:    14px;
+    --radius-sm: 8px;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--green-50);
+    color: var(--gray-800);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+header {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--green-700);
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(135deg, var(--green-800) 0%, var(--green-600) 55%, var(--green-500) 100%);
+    background-size: 20px 20px, 100% 100%;
+    padding: 28px 40px;
+    box-shadow: 0 6px 24px rgba(21, 128, 61, 0.22);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Vòng tròn ánh sáng mềm ở góc phải */
+header::before {
+    content: "";
+    position: absolute;
+    top: -90px;
+    right: -40px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 50%, transparent 70%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+}
+
+/* Họa tiết đồ thị chờ chìm bên phải */
+header::after {
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 180px;
+    height: 100px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100' fill='none' stroke='white' stroke-opacity='0.22' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='90' cy='16' r='12'/%3E%3Ccircle cx='142' cy='80' r='12'/%3E%3Ccircle cx='38' cy='80' r='12'/%3E%3Cpath d='M100 25 L133 68 M133 56 V68 L121 66 M128 80 H52 M62 73 L52 80 L62 87 M46 70 L79 27 M68 31 L79 27 L80 39'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+}
+
+.header-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-icon {
+    font-size: 1.9rem;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 0 12px rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+header h1 {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+header p {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(0, 0, 0, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 0.84rem;
+    margin-top: 6px;
+}
+
+/* ============================================================
+   Main layout
+   ============================================================ */
+main {
+    max-width: 1100px;
+    margin: 36px auto 60px;
+    padding: 0 24px;
+}
+
+/* ============================================================
+   Toolbar & Tabs
+   ============================================================ */
+.toolbar, .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 8px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(34,197,94,.12);
+}
+
+.toolbar { align-items: center; padding: 12px 16px; }
+.toolbar label { font-weight: 600; color: var(--gray-700); }
+.toolbar-space { flex: 1; }
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: .9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    background: transparent;
+    color: var(--gray-600);
+    transition: all .2s;
+}
+
+.tab-btn:hover { background: var(--green-50); color: var(--green-700); }
+
+.tab-btn.active {
+    background: linear-gradient(135deg, var(--green-600), var(--green-500));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(22,163,74,.3);
+}
+
+/* ============================================================
+   Buttons & Inputs
+   ============================================================ */
+.btn {
+    background: #fff;
+    color: var(--green-700);
+    border: 1.5px solid var(--green-200);
+    padding: 7px 18px;
+    border-radius: 50px;
+    font: inherit;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s, background .15s;
+}
+
+.btn:hover { background: var(--green-50); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--green-600), var(--green-500));
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(22,163,74,.35);
+}
+
+.btn.primary:hover { box-shadow: 0 6px 20px rgba(22,163,74,.45); }
+.btn.large { padding: 11px 32px; font-size: .95rem; margin-top: 16px; }
+
+.btn:disabled {
+    background: var(--gray-100);
+    color: var(--gray-400);
+    border-color: var(--gray-200);
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+select, .field-row input {
+    padding: 8px 12px;
+    border: 1.5px solid var(--green-200);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: .88rem;
+    background: #fff;
+    color: var(--gray-800);
+    outline: none;
+    transition: border-color .2s;
+}
+
+select { cursor: pointer; max-width: 100%; }
+select:focus, .field-row input:focus { border-color: var(--green-500); }
+
+.field-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 8px;
+}
+
+.field-row label { font-weight: 600; font-size: .88rem; color: var(--gray-700); }
+.field-row input { width: 80px; margin-left: 6px; }
+.field-row select { min-width: 140px; margin-left: 6px; }
+
+/* ============================================================
+   Banner kết quả
+   ============================================================ */
+.banner {
+    margin-bottom: 20px;
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    font-size: 1.05rem;
+    font-weight: 700;
+    white-space: pre-wrap;
+    box-shadow: var(--shadow-sm);
+}
+
+.kind-0 { background: #fff; border-left: 5px solid var(--green-500); color: var(--green-800); }
+.kind-1 { background: linear-gradient(135deg, var(--green-50), var(--green-100)); border: 2px solid var(--green-400); color: var(--green-700); }
+.kind-2 { background: linear-gradient(135deg, #fef2f2, var(--red-100)); border: 2px solid var(--red-400); color: var(--red-600); }
+
+#status { margin: -12px 4px 12px; font-size: .82rem; color: var(--gray-600); }
+#status:empty { display: none; }
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(34,197,94,.12);
+    transition: box-shadow .2s;
+}
+
+.card:hover { box-shadow: var(--shadow-lg); }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--green-100);
+}
+
+.card-icon { font-size: 1.3rem; }
+
+.card-header h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--green-800);
+}
+
+.sub-title {
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin: 22px 0 10px;
+}
+
+.note {
+    font-size: .82rem;
+    color: var(--gray-400);
+    margin-bottom: 10px;
+}
+
+.fade-in { animation: fadeUp .5s ease both; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    column-gap: 24px;
+}
+
+.matrix-grid > div { min-width: 0; }
+
+/* ============================================================
+   Table
+   ============================================================ */
+.table-wrapper { overflow-x: auto; border-radius: var(--radius-sm); }
+
+.grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: .87rem;
+    white-space: nowrap;
+}
+
+.grid thead th {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(180deg, var(--green-700), var(--green-800));
+    color: #fff;
+    padding: 10px 14px;
+    text-align: center;
+    font-weight: 600;
+    font-size: .82rem;
+    letter-spacing: .3px;
+}
+
+.grid thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+.grid thead th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+
+.grid tbody tr { transition: background .15s; }
+.grid tbody tr:nth-child(even) { background: var(--green-50); }
+.grid tbody tr:hover { background: var(--green-100); }
+
+.grid tbody th, .grid tbody td {
+    padding: 9px 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+}
+
+.grid tbody th { width: 70px; color: var(--gray-800); }
+.grid tbody tr:last-child th, .grid tbody tr:last-child td { border-bottom: none; }
+
+.matrix td { min-width: 48px; }
+.matrix tbody td:has(input) { padding: 4px; }
+
+.matrix input {
+    width: 100%;
+    min-width: 40px;
+    padding: 5px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    background: var(--gray-50);
+    font: inherit;
+    color: var(--gray-800);
+    text-align: center;
+    outline: none;
+    transition: border-color .2s, background .2s;
+}
+
+.matrix input:focus {
+    border-color: var(--green-400);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.12);
+}
+
+.grid td.error { background: var(--red-100); }
+.matrix td.error input { border-color: var(--red-400); background: var(--red-100); color: var(--red-600); }
+
+.grid tbody tr.ok td { background: var(--green-100); color: var(--green-800); }
+.grid tbody tr.current td { background: var(--orange-100); color: var(--gray-800); font-weight: 700; }
+
+/* ============================================================
+   Từng bước & kết quả
+   ============================================================ */
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.buttons .btn:first-child { margin-right: 12px; }
+.work { font-weight: 600; color: var(--green-700); white-space: pre-wrap; }
+.finish { margin-bottom: 10px; color: var(--gray-600); }
+.true { color: var(--green-700); }
+.table-wrap { max-height: 420px; overflow: auto; }
+
+.result {
+    margin-top: 18px;
+    padding: 16px 22px;
+    border-radius: var(--radius);
+    font-weight: 700;
+    animation: fadeUp .4s ease;
+}
+
+.good { background: linear-gradient(135deg, var(--green-50), var(--green-100)); border: 2px solid var(--green-400); color: var(--green-700); }
+.bad  { background: linear-gradient(135deg, #fef2f2, var(--red-100)); border: 2px solid var(--red-400); color: var(--red-600); }
+
+.text-good { color: var(--green-700); font-weight: 700; }
+.text-bad  { color: var(--red-600); }
+.text-warn { color: var(--orange-500); font-weight: 600; }
+.strong    { font-weight: 700; margin: 12px 0 6px; }
+#deadlock ul { padding-left: 22px; margin: 6px 0 14px; }
+
+.box {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: .87rem;
+    white-space: pre-wrap;
+}
+
+.box:empty { display: none; }
+
+/* ============================================================
+   Đồ thị RAG & Log
+   ============================================================ */
+#rag-summary { margin-top: 16px; }
+#rag-view { display: block; width: 100%; max-height: 420px; }
+#rag-view .edge { stroke: var(--gray-600); stroke-width: 1.6; fill: var(--gray-600); }
+#rag-view .edge.cycle { stroke: var(--red-600); stroke-width: 2.6; fill: var(--red-600); }
+#rag-view .node { fill: var(--green-100); stroke: var(--green-700); stroke-width: 2; }
+#rag-view .node.cycle { fill: var(--red-100); stroke: var(--red-600); }
+#rag-view .node.blocked { fill: var(--orange-100); stroke: var(--orange-500); }
+#rag-view .node-label { text-anchor: middle; dominant-baseline: central; font-weight: bold; }
+#rag-view .placeholder { text-anchor: middle; fill: var(--gray-400); }
+#rag-view .legend { fill: var(--gray-600); font-size: 12px; white-space: pre; }
+
+#log {
+    height: 220px;
+    overflow: auto;
+    padding: 14px 18px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-size: .82rem;
+    color: var(--gray-700);
+    white-space: pre-wrap;
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+.hidden, [hidden] { display: none !important; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--green-400); border-radius: 3px; }
+
+@media (max-width: 700px) {
+    header { padding: 20px 16px; }
+    header::after { display: none; }
+    main { padding: 0 16px; }
+    .card { padding: 20px 16px; }
+    .tab-btn { flex: 1 1 40%; }
+    .matrix-grid { grid-template-columns: 1fr; }
+}

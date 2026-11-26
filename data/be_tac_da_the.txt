@@ -1,0 +1,18 @@
+# Bế tắc tài nguyên đa thể (3 tiến trình)
+# P0, P1, P2 chờ vòng; dùng thuật toán phát hiện bế tắc và gợi ý xử lý.
+# n m
+3 3
+# Available
+0 0 0
+# Allocation
+1 0 1
+1 1 0
+0 1 1
+# Max
+2 1 1
+1 2 1
+1 1 2
+# Request
+1 1 0
+0 1 1
+1 0 1
